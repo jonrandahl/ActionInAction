@@ -1,7 +1,7 @@
 name: My First Workflow
-on: 
+on:
   push:
-    branches: 
+    branches:
     - main
 
   workflow_dispatch:
@@ -9,13 +9,13 @@ on:
 jobs:
   MyFirstJob:
     runs-on: ubuntu-latest
-    
+
     steps:
       - run: echo "👋 Hello World!"
 
       - name: Checkout
         uses: actions/checkout@v4.1.4
-        
+
       - name: List files in repository
         run: |
           echo "The repository ${{ github.repository }} contains the following files:"
@@ -24,16 +24,21 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: "echo Job: ${{ github.job }}"
- 
-  job_2:
-  job_3:
-    needs: job_1
-    runs-on: ubuntu-latest
-    steps:
-      - run: "echo Job: ${{ github.job }}"
 
-  job_4:
-    runs-on: ubuntu-latest
-    needs: [job_2, job_3]
-    steps:
-      - run: "echo Job: ${{ github.job }}"
+  job_2:
+    runs-on: ubuntu-latest
+    needs: job_1
+    steps:
+      - run: "echo Job: ${{ github.job }}"
+
+  job_3:
+    runs-on: ubuntu-latest
+    needs: job_1
+    steps:
+      - run: "echo Job: ${{ github.job }}"
+
+  job_4:
+    runs-on: ubuntu-latest
+    needs: [job_2, job_3]
+    steps:
+    - run: "echo Job: ${{ github.job }}"
